@@ -1,4 +1,4 @@
-# Copyright (c) 2019, Remi Chateauneu
+# Copyright (c) 2019, Remi Chateauneu, Primhill Computers
 # All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -87,6 +87,8 @@ def get_procfs_path():
 def virtual_memory():
     raise Exception("Not implemented yet")
 
+    # int sys$getquiw (unsigned int efn, unsigned short int func, unsigned int *context, void *itmlst, struct _iosb *iosb, void (*astadr)(__unknown_params), int astprm); 
+
 
 def swap_memory():
     """Swap system memory as a (total, used, free, sin, sout) tuple."""
@@ -135,6 +137,8 @@ def disk_partitions(all=False):
     """Return system disk partitions."""
     raise Exception("Not implemented yet")
 
+    # int sys$device_scan (void *return_devnam, unsigned short int *retlen, void *search_devnam, void *itmlst, struct _generic_64 *contxt); 
+
 # =====================================================================
 # --- network
 # =====================================================================
@@ -170,6 +174,10 @@ def users():
     """Return currently connected users as a list of namedtuples."""
     raise Exception("Not implemented yet")
 
+    # AUTHORIZE utility.
+    # SYS$SYSTEM:SYSUAF.DAT
+    # int sys$getuai (unsigned int efn, unsigned int *contxt, void *usrnam, void *itmlst, struct _iosb *iosb, void (*astadr)(__unknown_params), int astprm); 
+
 
 # =====================================================================
 # --- processes
@@ -180,15 +188,17 @@ def pids():
     """Returns a list of PIDs currently running on the system."""
     raise Exception("Not implemented yet")
 
+    # int sys$process_scan (unsigned int *pidctx, void *itmlst);
+    # int sys$getjpi (unsigned int efn, unsigned int *pidadr, void *prcnam, void *itmlst, struct _iosb *iosb, void (*astadr)(__unknown_params), unsigned __int64 astprm); 
+
 
 def pid_exists(pid):
-    """Check for the existence of a unix pid."""
+    """Check for the existence of an OpenVMS pid."""
     raise Exception("Not implemented yet")
 
 
 def wrap_exceptions(fun):
-    """Call callable into a try/except clause and translate ENOENT,
-    EACCES and EPERM in NoSuchProcess or AccessDenied exceptions.
+    """Exceptions control.
     """
 
     def wrapper(self, *args, **kwargs):
@@ -198,7 +208,9 @@ def wrap_exceptions(fun):
 
 
 class Process(object):
-    """Wrapper class around underlying C implementation."""
+    """Wrapper class around underlying System Services and RTL calls."""
+
+    # LIB$GETJPI item-code [,process-id] [,process-name] [,resultant-value] [,resultant-string] [,resultant-length] 
 
     def __init__(self, pid):
         self.pid = pid
