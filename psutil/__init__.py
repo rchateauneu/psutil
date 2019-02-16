@@ -86,6 +86,7 @@ from ._common import OSX  # deprecated alias
 from ._common import POSIX  # NOQA
 from ._common import SUNOS
 from ._common import WINDOWS
+from ._common import OPENVMS
 
 if LINUX:
     # This is public API and it will be retrieved from _pslinux.py
@@ -168,6 +169,10 @@ elif AIX:
     # This is public API and it will be retrieved from _pslinux.py
     # via sys.modules.
     PROCFS_PATH = "/proc"
+
+elif OPENVMS:
+
+    from . import _psopenvms as _psplatform
 
 else:  # pragma: no cover
     raise NotImplementedError('platform %s is not supported' % sys.platform)

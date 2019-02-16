@@ -83,6 +83,7 @@ NETBSD = sys.platform.startswith("netbsd")
 BSD = FREEBSD or OPENBSD or NETBSD
 SUNOS = sys.platform.startswith(("sunos", "solaris"))
 AIX = sys.platform.startswith("aix")
+OPENVMS = sys.platform.startswith("OpenVMS")
 
 
 # ===================================================================
